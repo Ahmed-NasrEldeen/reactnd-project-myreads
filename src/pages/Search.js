@@ -8,11 +8,11 @@ function Search(props) {
   const [books, setBooks] = useState([]);
   const [myBooks, setMyBooks] = useState([]);
 
+  const fetchbooks = async () => {
+    const allbooks = await BooksAPI.getAll();
+    setMyBooks(allbooks);
+  };
   useEffect(() => {
-    const fetchbooks = async () => {
-      const allbooks = await BooksAPI.getAll();
-      setMyBooks(allbooks);
-    };
     fetchbooks();
   }, []);
 
@@ -22,6 +22,8 @@ function Search(props) {
     tempbooks[index].shelf = state;
     setBooks(tempbooks);
     await BooksAPI.update(tempbooks[index], state);
+    const allbooks = await BooksAPI.getAll();
+    setMyBooks(allbooks);
   };
 
   const update = (books) => {
